@@ -18,17 +18,35 @@ CustomRender iframeRender({NavigationDelegate? navigationDelegate}) =>
         child: CssBoxWidget(
           style: context.style,
           childIsReplaced: true,
-          child: WebView(
-            initialUrl: context.tree.element?.attributes['src'],
+          // child: WebView(
+          //   initialUrl: context.tree.element?.attributes['src'],
+          //   key: key,
+          //   javascriptMode:
+          //       sandboxMode == null || sandboxMode == "allow-scripts"
+          //           ? JavascriptMode.unrestricted
+          //           : JavascriptMode.disabled,
+          //   navigationDelegate: navigationDelegate,
+          //   gestureRecognizers: {
+          //     Factory<VerticalDragGestureRecognizer>(
+          //         () => VerticalDragGestureRecognizer())
+          //   },
+          // ),
+          child: WebViewWidget(
             key: key,
-            javascriptMode:
+            controller: WebViewController()
+              ..setJavaScriptMode(
                 sandboxMode == null || sandboxMode == "allow-scripts"
-                    ? JavascriptMode.unrestricted
-                    : JavascriptMode.disabled,
-            navigationDelegate: navigationDelegate,
+                    ? JavaScriptMode.unrestricted
+                    : JavaScriptMode.disabled,
+              )
+              ..setNavigationDelegate(
+                  navigationDelegate ?? NavigationDelegate())
+              ..loadRequest(
+                  Uri.parse(context.tree.element?.attributes['src'] ?? "")),
             gestureRecognizers: {
               Factory<VerticalDragGestureRecognizer>(
-                  () => VerticalDragGestureRecognizer())
+                () => VerticalDragGestureRecognizer(),
+              )
             },
           ),
         ),
