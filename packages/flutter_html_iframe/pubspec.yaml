@@ -15,7 +15,8 @@ dependencies:
   flutter_html:
     path: ../..
 
-  webview_flutter: '>=4.7.0 <6.0.0'
+#  webview_flutter: '>=4.7.0 <6.0.0'
+  webview_flutter: ^4.10.0
 
 dev_dependencies:
   flutter_test:
